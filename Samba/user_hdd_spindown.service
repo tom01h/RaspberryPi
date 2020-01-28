@@ -1,0 +1,12 @@
+[Unit]
+Description=hdd spindown by sdparm
+After=mnt-hdd1.mount
+
+[Service]
+ExecStart=/root/hdd_spindown.sh 14F6EB08F6EAE8C6 300 > /dev/null 2>&1
+KillMode=process
+Type=simple
+Restart=no
+
+[Install]
+WantedBy=multi-user.target
