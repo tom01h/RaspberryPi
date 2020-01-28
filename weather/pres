@@ -1,0 +1,26 @@
+#!/bin/sh
+#%# family=auto
+#%# capabilities=autoconf
+GETNUM=`python3 /usr/local/bin/bme280_pres.py`
+if [ "$1" = "autoconf" ]; then
+ if [ -n ${GETNUM} ] ; then
+ echo yes
+ exit 0
+ else
+ echo no
+ exit 0
+ fi
+fi
+if [ "$1" = "config" ]; then
+ echo 'graph_title pressure'
+ echo 'graph_args -r -l 940 --lower-limit 940'
+ echo 'graph_scale no'
+ echo 'graph_vlabel hPa'
+ echo 'graph_category Weather'
+ echo 'total.label pressure'
+ echo 'total.min 0'
+ echo 'total.draw LINE2'
+ echo 'total.type GAUGE'
+ exit 0
+fi
+echo "total.value $GETNUM";

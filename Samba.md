@@ -4,7 +4,7 @@ Raspberry Pi に Samba をインストールして Windows 10 からネットワ
 接続するディスクは NTFS フォーマットされたディスクです。  
 [参考にしたサイト](https://qiita.com/Cinosura/items/6ab435331ea2b3671a1d) には無い情報もいくつか追加してまりますが、基本的にはリンク先のほうがわかりやすいと思います。
 
-#### Windows と同じユーザを追加する
+### Windows と同じユーザを追加する
 
 私の場合は tom01h を追加します。sudo 権限を与えます。
 
@@ -13,7 +13,7 @@ $ sudo adduser tom01h
 $ sudo gpasswd -a tom01h sudo
 ```
 
-#### ランレベルを設定する
+### ランレベルを設定する
 
 ```
 $ systemctl get-default
@@ -22,7 +22,7 @@ $ sudo systemctl set-default multi-user.target
 Created symlink from /etc/systemd/system/default.target → /lib/systemd/system/multi-user.target.
 ```
 
-#### HDD(NTFS) をマウント
+### HDD(NTFS) をマウント
 
 NTFS は繋ぐだけで認識されるようです。しかも、なぜか /dev/sda1 が未使用で /dev/sda2 を使っていました。  
 なので、
@@ -37,7 +37,7 @@ $ sudo blkid /dev/sda2
 UUID="14F6EB08F6EAE8C6" /mnt/hdd1 ntfs-3g defaults,nofail 0       0
 ```
 
-#### HDDの自動停止
+### HDDの自動停止
 
 [さらに参考にしたサイトのリンク](http://kassyjp.ninja-web.net/ras/jessie/spindown.htm) をたどります。うちの環境では hdparm が動きました。
 
@@ -62,7 +62,7 @@ $ systemctl list-units| grep -F .mount
 $ sudo systemctl enable user_hdd_spindown.service
 ```
 
-#### Samba をインストール
+### Samba をインストール
 
 ```
 $ sudo apt install samba
@@ -86,7 +86,7 @@ WINS 云々聞かれたけど「いいえ」を選びました。
    valid users = tom01h ; <- %S
 ```
 
-#### Munin をインストール
+### Munin をインストール
 
 ファイルサーバに Munin は必須ではないですが、リモートから状況を確認できると便利かと思いインストールしました。
 

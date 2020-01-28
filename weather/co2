@@ -1,0 +1,25 @@
+#!/bin/sh
+#%# family=auto
+#%# capabilities=autoconf
+GETNUM=`python3 /usr/local/bin/mhz19.py`
+if [ "$1" = "autoconf" ]; then
+ if [ -n ${GETNUM} ] ; then
+ echo yes
+ exit 0
+ else
+ echo no
+ exit 0
+ fi
+fi
+if [ "$1" = "config" ]; then
+ echo 'graph_title co2'
+ echo 'graph_args -r -l 400 --lower-limit 400'
+ echo 'graph_vlabel ppm'
+ echo 'graph_category Weather'
+ echo 'total.label co2'
+ echo 'total.min 0'
+ echo 'total.draw LINE2'
+ echo 'total.type GAUGE'
+ exit 0
+fi
+echo "total.value $GETNUM";
