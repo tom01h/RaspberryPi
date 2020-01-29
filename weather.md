@@ -1,8 +1,14 @@
 # Raspberry Pi に環境センサを付ける
 
-**間違って BMP280 を買ったので、説明と食い違うところがあります。いずれ BME280 に繋ぎなおして資料を更新します。**
+Raspberry Pi に温度・湿度・気圧センサの BME280 と、二酸化炭素濃度センサ MH-Z19 を接続して Munin で表示します。
 
-Raspberry Pi に温度・湿度・気圧センサの BME280 と、二酸化炭素濃度センサ MH-Z19 を接続します。  
+### センサの接続
+
+端子の接続図は後ほど。
+
+仕上げはこんな感じです。ピンヘッダの配置は Raspberry Pi に合わせました。
+
+![sensor](weather\sensor.JPG)
 
 ### I2C と Serial インタフェースを有効化
 
@@ -41,10 +47,11 @@ MH-Z19 は [ここ](https://qiita.com/UedaTakeyuki/items/c5226960a7328155635f) �
 
 ```
 $ sudo python3 bme280.py
-temp : 15.19  ℃
-pressure : 1008.40 hPa
+temp : 17.00  ℃
+pressure :  989.40 hPa
+hum :  53.08 ％
 $ sudo python3 mhz19_test.py
-co2 : 836 ppm
+co2 : 506 ppm
 ```
 
 
@@ -86,15 +93,16 @@ http://{ラズパイの名前}/munin/
 
 [ここ](https://densi.biz/munin-glaf) を参考にします。
 
-まず、”センサを動かす” で作ったスクリプトの出力を変えた ```mhz19.py, bme280_temp.py, bme280_pres.py``` を、/usr/local/bin に置きます。
+まず、”センサを動かす” で作ったスクリプトの出力を変えた ```mhz19.py, bme280_temp.py, bme280_pres.py, bme280_hum.py``` を、/usr/local/bin に置きます。
 
-Munin にセンサデータを追加するため、```/usr/share/munin/plugins/{temp, pres, co2}```  を準備します。
+Munin にセンサデータを追加するため、```/usr/share/munin/plugins/{temp, pres, hum, co2}```  を準備します。
 
 先ほどのスクリプトを Munin に追加します。
 
 ```
 $ sudo ln -s /usr/share/munin/plugins/temp /etc/munin/plugins/temp
 $ sudo ln -s /usr/share/munin/plugins/pres /etc/munin/plugins/pres
+$ sudo ln -s /usr/share/munin/plugins/hum /etc/munin/plugins/hum
 $ sudo ln -s /usr/share/munin/plugins/co2 /etc/munin/plugins/co2
 ```
 
@@ -105,6 +113,9 @@ $ sudo ln -s /usr/share/munin/plugins/co2 /etc/munin/plugins/co2
 user root
 
 [pres]
+user root
+
+[hum]
 user root
 
 [co2]

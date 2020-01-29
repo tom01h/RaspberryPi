@@ -51,3 +51,13 @@ Raspbian Full を選ぶ・言語とキーボードを日本語に設定・イン
 XKBOPTIONS="ctrl:nocaps"
 ```
 
+#### ユーザを追加するなら
+
+pi と同じグループを設定しておきます。
+
+```
+$ sudo adduser tom01h
+$ sudo -u pi groups
+(ここで表示されるグループを全部追加する)
+$ sudo gpasswd -a tom01h グループ名
+```

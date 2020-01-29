@@ -1,0 +1,25 @@
+#!/bin/sh
+#%# family=auto
+#%# capabilities=autoconf
+GETNUM=`python3 /usr/local/bin/bme280_hum.py`
+if [ "$1" = "autoconf" ]; then
+ if [ -n ${GETNUM} ] ; then
+ echo yes
+ exit 0
+ else
+ echo no
+ exit 0
+ fi
+fi
+if [ "$1" = "config" ]; then
+ echo 'graph_title humidity'
+ echo 'graph_args -r --lower-limit 0'
+ echo 'graph_vlabel %'
+ echo 'graph_category Weather'
+ echo 'total.label temperature'
+ echo 'total.min 0'
+ echo 'total.draw LINE2'
+ echo 'total.type GAUGE'
+ exit 0
+fi
+echo "total.value $GETNUM";

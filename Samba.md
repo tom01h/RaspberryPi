@@ -6,11 +6,18 @@ Raspberry Pi に Samba をインストールして Windows 10 からネットワ
 
 ### Windows と同じユーザを追加する
 
-私の場合は tom01h を追加します。sudo 権限を与えます。
+私の場合は tom01h を追加します。
 
 ```
 $ sudo adduser tom01h
-$ sudo gpasswd -a tom01h sudo
+```
+
+pi と同じグループを設定しておきます。
+
+```
+$ sudo -u pi groups
+(ここで表示されるグループを全部追加する)
+$ sudo gpasswd -a tom01h グループ名
 ```
 
 ### ランレベルを設定する
