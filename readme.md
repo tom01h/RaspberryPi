@@ -16,3 +16,8 @@ RaspberryPi のインストール方法と設定ファイル
 
 セットアップ方法 weather.md  
 関連ファイル weather/
+
+### Raspberry Pi Zero W に Raspbian Stretch Lite をインストールして Windows10 と USB 接続
+
+セットアップ方法 RPI0W.md  
+関連ファイル RPI0W/
