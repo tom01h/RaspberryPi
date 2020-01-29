@@ -8,7 +8,7 @@ Raspberry Pi に温度・湿度・気圧センサの BME280 と、二酸化炭�
 
 仕上げはこんな感じです。ピンヘッダの配置は Raspberry Pi に合わせました。
 
-![sensor](weather\sensor.JPG)
+![sensor](weather/sensor.JPG)
 
 ### I2C と Serial インタフェースを有効化
 
