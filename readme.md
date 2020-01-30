@@ -21,3 +21,8 @@ RaspberryPi のインストール方法と設定ファイル
 
 セットアップ方法 RPI0W.md  
 関連ファイル RPI0W/
+
+### Raspberry Pi 3 Model  A+ に Raspbian Stretch Lite をインストールして Windows10 と シリアル接続
+
+セットアップ方法 RPI3A.md  
+関連ファイル RPI3A/

@@ -16,10 +16,10 @@ USB 接続の設定は [ここ](https://qiita.com/Liesegang/items/dcdc669f80d1bf
 
 今回は 16GB の Micro SD カードを準備しました。  
 データのコピーには Rasbian を使います。  
-Micro SD は /dev/sda でした。/dev/sda1 をアンマウントしてから、
+Micro SD は /dev/sdb でした。/dev/sdb? をアンマウントしてから、
 
 ```
-$ sudo dd bs=4M if=/media/pi/…/2019-09-26-raspbian-buster-lite.img of=/dev/sda conv=fsync
+$ unzip -p /…/2019-09-26-raspbian-buster-lite.zip | sudo dd bs=4M of=/dev/sdb conv=fsync
 ```
 
 ### USB 接続の設定
