@@ -24,9 +24,10 @@ $ sudo raspi-config
 -- 5 Interfacing Option - P6 Serial - login shell No - hardware … enable Yes
 ```
 
-I2C の接続を確認して、Python3 から I2C を使う smbus2 をインストールします。
+I2C の接続を確認して、Python3 から I2C を使う smbus2 と Serial を使う pyserial をインストールします。
 
 ```
+$ sudo apt install -y i2c-tools
 $ sudo i2cdetect -y 1
      0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
 00:          -- -- -- -- -- -- -- -- -- -- -- -- --
@@ -37,7 +38,9 @@ $ sudo i2cdetect -y 1
 50: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 70: -- -- -- -- -- -- 76 --
+$ sudo apt install python3-pip
 $ sudo pip3 install smbus2
+$ sudo pip3 install pyserial
 ```
 
 ### センサを動かす
