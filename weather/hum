@@ -16,7 +16,7 @@ if [ "$1" = "config" ]; then
  echo 'graph_args -r --lower-limit 0'
  echo 'graph_vlabel %'
  echo 'graph_category Weather'
- echo 'total.label temperature'
+ echo 'total.label humidity'
  echo 'total.min 0'
  echo 'total.draw LINE2'
  echo 'total.type GAUGE'
