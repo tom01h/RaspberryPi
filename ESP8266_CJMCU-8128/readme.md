@@ -18,5 +18,15 @@ SparkFun のライブラリとサンプルコードを利用します。
 
 ### Munin に追加する
 
-[Munin からデータを読み出す方法](https://www.grezzo.co.jp/tech/archives/745) を真似して、ラズパイのリモートセンサーにします。← まだ
+[Munin からデータを読み出す方法](https://www.grezzo.co.jp/tech/archives/745) を真似して、ラズパイのリモートセンサーにします。  
+ここの `esp8266_*.pl` を `/ur/local/bin` にコピーして、`../weather` の代わりにここの `temp, pres` などを `/usr/share/munin/plugins/` にコピーします。
+
+Prel にパッケージの追加が必要でした。
+
+```
+sudo cpan （yes/noを聞かれたら、とりあえずエンター)
+install LWP
+install JSON
+exit
+```
 

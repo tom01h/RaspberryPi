@@ -1,0 +1,32 @@
+#!/bin/sh
+#%# family=auto
+#%# capabilities=autoconf
+if [ "$1" = "autoconf" ]; then
+ if [ -n ${GETNUM} ] ; then
+ echo yes
+ exit 0
+ else
+ echo no
+ exit 0
+ fi
+fi
+if [ "$1" = "config" ]; then
+ echo 'graph_title pressure'
+ echo 'graph_args -r -l 940 --lower-limit 940'
+ echo 'graph_scale no'
+ echo 'graph_vlabel hPa'
+ echo 'graph_category Weather'
+ echo 'room1.label Room1'
+ echo 'room1.min 0'
+ echo 'room1.draw LINE2'
+ echo 'room1.type GAUGE'
+ echo 'room2.label Room2'
+ echo 'room2.min 0'
+ echo 'room2.draw LINE2'
+ echo 'room2.type GAUGE'
+ exit 0
+fi
+GETNUM=`python3 /usr/local/bin/bme280_pres.py`
+echo "room1.value $GETNUM";
+GETNUM=`/usr/local/bin/esp8266_pres.pl`
+echo "room2.value $GETNUM";
