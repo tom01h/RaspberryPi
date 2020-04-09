@@ -1,0 +1,31 @@
+#!/bin/sh
+#%# family=auto
+#%# capabilities=autoconf
+if [ "$1" = "autoconf" ]; then
+ if [ -n ${GETNUM} ] ; then
+ echo yes
+ exit 0
+ else
+ echo no
+ exit 0
+ fi
+fi
+if [ "$1" = "config" ]; then
+ echo 'graph_title humidity'
+ echo 'graph_args -r --lower-limit 0'
+ echo 'graph_vlabel %'
+ echo 'graph_category Weather'
+ echo 'room1.label room1'
+ echo 'room1.min 0'
+ echo 'room1.draw LINE2'
+ echo 'room1.type GAUGE'
+ echo 'room2.label room2'
+ echo 'room2.min 0'
+ echo 'room2.draw LINE2'
+ echo 'room2.type GAUGE'
+ exit 0
+fi
+GETNUM=`python3 /usr/local/bin/bme280_hum.py`
+echo "room1.value $GETNUM";
+GETNUM=`/usr/local/bin/esp8266_hum.pl`
+echo "room2.value $GETNUM";

@@ -16,7 +16,9 @@ def mh_z19():
       co2 = s[2]*256 + s[3]
 #      print("co2 : %d ppm" % (co2))
       print("%d" % (co2))
+      time.sleep(1)
       result=ser.write(b"\xff\x01\x79\x00\x00\x00\x00\x00\x86")
+      time.sleep(1)
       return
     break
 

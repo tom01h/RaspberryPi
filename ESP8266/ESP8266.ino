@@ -1,13 +1,22 @@
 #include <ESP8266WiFi.h>
 #include <Wire.h>
+#include <SoftwareSerial.h>
 
 //const char* ssid = "abcxyz";
 //const char* password = "password123";
 
+const char* ssid = "TP-LINK_FCD7";
+const char* password = "97269571";
+
 boolean Ini_html_on = false;//ブラウザからの初回HTTPレスポンス完了したかどうかのフラグ
 
 #include "SparkFunBME280.h"
-BME280 myBMP280;
+BME280 myBME280;
+
+#include "MHZ.h"
+#define MH_Z19_RX D4
+#define MH_Z19_TX D3
+MHZ myMHZ19(MH_Z19_RX, MH_Z19_TX);
 
 WiFiServer server(80);
 WiFiClient client;
@@ -15,6 +24,7 @@ WiFiClient client;
 void setup()
 {
   Serial.begin(115200);
+  myMHZ19.setDebug(true);
 
   // Connect to WiFi network
   Serial.println();
@@ -69,8 +79,8 @@ void setup()
   Wire.begin(D5, D6);
 
   Serial.println("Reading basic values from BME280");
-  myBMP280.setI2CAddress(0x76);
-  if (myBMP280.beginI2C() == false) //Begin communication over I2C
+  myBME280.setI2CAddress(0x76);
+  if (myBME280.beginI2C() == false) //Begin communication over I2C
   {
     Serial.println("The sensor did not respond. Please check wiring.");
     while(1); //Freeze
@@ -89,12 +99,12 @@ void loop()
 
 void Ini_HTTP_Response()
 {
-  double temperature = 0.0, pressure = 0.0;
+  double temperature = 0.0, pressure = 0.0, co2 = 0.0, humidity = 0.0;
 
   client = server.available();//クライアント生成
   delay(1);
   String req;
-  char temps[16], presss[16];
+  char temps[16], presss[16], humi[16], co2_[16];
 
   while(client){
     if(client.available()){
@@ -111,23 +121,39 @@ void Ini_HTTP_Response()
         req = "";
         delay(10);//10ms待ってレスポンスをブラウザに送信
 
-        temperature = myBMP280.readTempC();
-        pressure = myBMP280.readFloatPressure()/100;
+        temperature = myBME280.readTempC();
+        pressure = myBME280.readFloatPressure()/100;
+        humidity = myBME280.readFloatHumidity();
+
+        co2 = myMHZ19.readCO2UART();
 
         dtostrf(temperature,5,2,temps);
         dtostrf(pressure,5,2,presss);
+        dtostrf(humidity,5,2,humi);
+        dtostrf(co2,5,2,co2_);
 
         client.print(F("HTTP/1.1 200 OK\r\n"));
         client.print(F("Content-Type:application/json; charset=utf-8\r\n"));
         client.print(F("\r\n\r\n"));
         client.print(F("{\r\n"));
         client.print(F("  \"id\": 1,\r\n"));
+
         client.print(F("  \"temperature\": "));
         client.print(temps);
         client.print(F(",\r\n"));
+
+        client.print(F("  \"humidity\": "));
+        client.print(humi);
+        client.print(F(",\r\n"));
+
         client.print(F("  \"pressure\": "));
         client.print(presss);
+        client.print(F(",\r\n"));
+
+        client.print(F("  \"co2\": "));
+        client.print(co2_);
         client.print(F("\r\n"));
+
         client.print(F("}\r\n"));
 
         delay(1);//これが重要！これが無いと切断できないかもしれない。
@@ -139,8 +165,12 @@ void Ini_HTTP_Response()
 
         Serial.print(" Temp: ");
         Serial.print(temperature, 2);
+        Serial.print(" Humidity: ");
+        Serial.print(humidity, 2);
         Serial.print(" Pressure: ");
         Serial.print(pressure, 2);
+        Serial.print(" CO2: ");
+        Serial.print(co2, 2);
         Serial.println();
       }
     }
