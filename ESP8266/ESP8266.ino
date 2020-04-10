@@ -5,9 +5,6 @@
 //const char* ssid = "abcxyz";
 //const char* password = "password123";
 
-const char* ssid = "TP-LINK_FCD7";
-const char* password = "97269571";
-
 boolean Ini_html_on = false;//ブラウザからの初回HTTPレスポンス完了したかどうかのフラグ
 
 #include "SparkFunBME280.h"
