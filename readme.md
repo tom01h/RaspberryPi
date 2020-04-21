@@ -1,6 +1,8 @@
 # Raspberry Pi 
 
-RaspberryPi のインストール方法と設定ファイル
+RaspberryPi と ESP8266 で温度・湿度・気圧・CO2濃度を管理する
+
+ついでに RaspberryPi のインストール方法もちょっと説明
 
 ### Raspberry Pi 4 Model B に NOBS をインストール
 
@@ -17,6 +19,11 @@ RaspberryPi のインストール方法と設定ファイル
 セットアップ方法 weather.md  
 関連ファイル weather/
 
+### ESP8266 にリモート環境センサを接続
+
+セットアップ方法 ESP8266/readme.md  
+関連ファイル ESP8266/
+
 ### Raspberry Pi Zero W に Raspbian Stretch Lite をインストールして Windows10 と USB 接続
 
 セットアップ方法 RPI0W.md  
@@ -27,7 +34,10 @@ RaspberryPi のインストール方法と設定ファイル
 セットアップ方法 RPI3A.md  
 関連ファイル RPI3A/
 
-### ESP8266 にリモート環境センサを接続
 
-セットアップ方法 ESP8266/readme.md  
-関連ファイル ESP8266/
+
+# 完成品の動作例
+
+Raspberry Pi 4 と ESP8266 両方の環境センサを稼働させるとこんな感じになります。
+
+![sample](sample.png)
