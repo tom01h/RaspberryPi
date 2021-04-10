@@ -5,7 +5,10 @@ require LWP::UserAgent;
  
 use JSON;
  
-$request = HTTP::Request->new(GET => 'http://192.168.0.15/');
+$ip = $ARGV[0];
+$ip = 'http://192.168.0.'.$ip.'/';
+
+$request = HTTP::Request->new(GET => $ip);
 $ua = LWP::UserAgent->new;
 $response = $ua->request($request);
 if ($response->is_success) {

@@ -146,3 +146,36 @@ Windows から以下のアドレスでアクセス出来るようになりまし
 ```
 http://rpi-server.local/munin/weather-day.html
 ```
+
+### munin データの移行
+
+次のファイル `/var/lib/munin/state-localdomain-localhost.localdomain.storable` とディレクトリ `/var/lib/munin/localdomain/` をコピーします。
+
+ただし、OS が32bitから64bitになった時には変換が必要です。以下サイトを参考にした。
+
+[munin: migration from a 32bit to a 64bit host](https://www.porcheron.info/munin-migration-from-a-32bit-to-a-64bit-Host/)
+
+ファイルをコピーする前に古いホストで
+
+```
+#!/bin/bash
+for f in `find /var/lib/munin -name '*.rrd' -print` ; do
+    xml_file=`dirname $f`/`basename $f .rrd`.xml
+   rrdtool dump "$f" > "${xml_file}"
+   chown root:root "${xml_file}"
+done
+```
+
+ファイルをコピーした後に新しいホストで
+
+```
+#!/bin/bash
+for f in `find /var/lib/munin -name '*.xml' -print` ; do
+   rrd_file=`dirname $f`/`basename $f .xml`.rrd
+   mv -f "${rrd_file}" "${rrd_file}.bak"
+   chown root:root "${rrd_file}.bak"
+   rrdtool restore "$f" "${rrd_file}"
+   chown munin:munin "${rrd_file}"
+done
+```
+

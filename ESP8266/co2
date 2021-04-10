@@ -27,5 +27,5 @@ if [ "$1" = "config" ]; then
 fi
 GETNUM=`python3 /usr/local/bin/mhz19.py`
 echo "room1.value $GETNUM";
-GETNUM=`/usr/local/bin/esp8266_co2.pl`
+GETNUM=`/usr/local/bin/esp8266_co2.pl 15`
 echo "room2.value $GETNUM";

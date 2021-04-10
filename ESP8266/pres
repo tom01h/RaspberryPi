@@ -24,9 +24,15 @@ if [ "$1" = "config" ]; then
  echo 'room2.min 0'
  echo 'room2.draw LINE2'
  echo 'room2.type GAUGE'
+ echo 'outside.label Outside'
+ echo 'outside.min 0'
+ echo 'outside.draw LINE2'
+ echo 'outside.type GAUGE'
  exit 0
 fi
 GETNUM=`python3 /usr/local/bin/bme280_pres.py`
 echo "room1.value $GETNUM";
-GETNUM=`/usr/local/bin/esp8266_pres.pl`
+GETNUM=`/usr/local/bin/esp8266_pres.pl 15`
 echo "room2.value $GETNUM";
+GETNUM=`/usr/local/bin/esp8266_pres.pl 14`
+echo "outside.value $GETNUM";
