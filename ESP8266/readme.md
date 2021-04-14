@@ -1,6 +1,8 @@
 # ESP8266 でリモートセンサ
 
-ESP8266 に BME280 と MH-Z19B を接続し、温度・湿度・気圧・CO2濃度を測定して、Raspberry Pi 上の Munin のリモートセンサーとして動作させます。
+ESP8266 に BME280 と MH-Z19B と BH1750 を接続し、温度・湿度・気圧・CO2濃度・照度を測定して、Raspberry Pi 上の Munin のリモートセンサーとして動作させます。
+
+今のところ `light.ino` は M5ATOM 用のコードです。
 
 ### BME280 のライブラリとサンプルコード
 
@@ -28,7 +30,7 @@ SparkFun のライブラリとサンプルコードを利用します。
 ### Munin に追加する
 
 [Munin からデータを読み出す方法](https://www.grezzo.co.jp/tech/archives/745) を真似して、ラズパイのリモートセンサーにします。  
-ここの `esp8266_*.pl` を `/usr/local/bin` にコピーして、`../weather` の代わりにここの `temp, pres` などを `/usr/share/munin/plugins/` にコピーします。
+ここの `esp8266_*.pl` を `/usr/local/bin` にコピーして、`../weather` の代わりにここの `temp, pres` などを `/usr/share/munin/plugins/` にコピーします。また、`munin-node` を `/etc/munin/plugin-conf.d/` にコピーします。
 
 Prel にパッケージの追加が必要でした。
 
