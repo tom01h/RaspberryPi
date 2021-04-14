@@ -1,6 +1,6 @@
 # Raspberry Pi 
 
-RaspberryPi と ESP8266 で温度・湿度・気圧・CO2濃度を管理する
+RaspberryPi と ESP8266 で温度・湿度・気圧・CO2濃度・照度を管理する
 
 ついでに RaspberryPi のインストール方法もちょっと説明
 
@@ -40,4 +40,4 @@ RaspberryPi と ESP8266 で温度・湿度・気圧・CO2濃度を管理する
 
 Raspberry Pi 4 と ESP8266 両方の環境センサを稼働させるとこんな感じになります。
 
-![sample](sample.png)
+![sample](sample.jpeg)
