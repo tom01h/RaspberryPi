@@ -18,6 +18,13 @@ SparkFun のライブラリとサンプルコードを利用します。
 
 [MH-Z19](https://github.com/tobiasschuerg/MH-Z-CO2-Sensors)
 
+### BH1750 のライブラリとサンプルコード
+
+ライセンスは LICENSE_BH1750 を参照してください。  
+オリジナルはいかにあります。
+
+[BH1750](https://github.com/claws/BH1750)
+
 ### Munin に追加する
 
 [Munin からデータを読み出す方法](https://www.grezzo.co.jp/tech/archives/745) を真似して、ラズパイのリモートセンサーにします。  

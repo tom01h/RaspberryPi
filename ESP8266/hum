@@ -27,6 +27,10 @@ if [ "$1" = "config" ]; then
  echo 'outside.min 0'
  echo 'outside.draw LINE2'
  echo 'outside.type GAUGE'
+ echo 'balcony.label Balcony'
+ echo 'balcony.min 0'
+ echo 'balcony.draw LINE2'
+ echo 'balcony.type GAUGE'
  exit 0
 fi
 GETNUM=`python3 /usr/local/bin/bme280_hum.py`
@@ -35,3 +39,5 @@ GETNUM=`/usr/local/bin/esp8266_hum.pl 15`
 echo "room2.value $GETNUM";
 GETNUM=`/usr/local/bin/esp8266_hum.pl 14`
 echo "outside.value $GETNUM";
+GETNUM=`/usr/local/bin/esp8266_hum.pl 13`
+echo "balcony.value $GETNUM";
