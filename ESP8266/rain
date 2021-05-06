@@ -1,0 +1,34 @@
+#!/bin/sh
+#%# family=auto
+#%# capabilities=autoconf
+if [ "$1" = "autoconf" ]; then
+ if [ -n ${GETNUM} ] ; then
+ echo yes
+ exit 0
+ else
+ echo no
+ exit 0
+ fi
+fi
+if [ "$1" = "config" ]; then
+ echo 'graph_title rain'
+ echo 'graph_args -r --lower-limit 0'
+ echo 'graph_vlabel mm'
+ echo 'graph_category Weather'
+ echo 'thour.label 3hour'
+ echo 'thour.min 0'
+ echo 'thour.draw LINE2'
+ echo 'ohour.label 1hour'
+ echo 'ohour.min 0'
+ echo 'ohour.draw LINE2'
+ echo 'fmin.label 5min'
+ echo 'fmin.min 0'
+ echo 'fmin.draw LINE2'
+ exit 0
+fi
+GETNUM=`/usr/local/bin/esp8266_rain.pl 0 11`
+echo "thour.value $GETNUM";
+GETNUM=`/usr/local/bin/esp8266_rain.pl 1 11`
+echo "ohour.value $GETNUM";
+GETNUM=`/usr/local/bin/esp8266_rain.pl 2 11`
+echo "fmin.value $GETNUM";

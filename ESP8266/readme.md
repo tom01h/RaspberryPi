@@ -27,6 +27,12 @@ SparkFun のライブラリとサンプルコードを利用します。
 
 [BH1750](https://github.com/claws/BH1750)
 
+### 雨量センサの参考にしたサイト
+
+[割り込みカウ数カウント](http://wakwak-koba.hatenadiary.jp/entries/2015/10/23)
+
+[チャタリング防止](http://play-arduino.seesaa.net/article/423315979.html)
+
 ### Munin に追加する
 
 [Munin からデータを読み出す方法](https://www.grezzo.co.jp/tech/archives/745) を真似して、ラズパイのリモートセンサーにします。  
