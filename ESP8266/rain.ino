@@ -1,9 +1,13 @@
 #include <ESP8266WiFi.h>
+#include <Wire.h>
 
 //const char* ssid = "abcxyz";
 //const char* password = "password123";
 
 boolean Ini_html_on = false;//ブラウザからの初回HTTPレスポンス完了したかどうかのフラグ
+
+#include "BH1750.h"
+BH1750 lightMeter(0x23);
 
 WiFiServer server(80);
 WiFiClient client;
@@ -35,7 +39,7 @@ void setup() {
     while(true);  // don't continue
   }
 
-  IPAddress ip(192, 168, 0, 11);
+  IPAddress ip(192, 168, 0, 12);
   IPAddress gateway(192, 168, 0, 1);
   IPAddress subnet(255, 255, 255, 0);
   IPAddress DNS(0, 0, 0, 0);
@@ -75,17 +79,14 @@ void setup() {
   Serial.print("IP Address: ");
   Serial.println(WiFi.localIP());
 
-  Serial.print("5min");
-  Serial.print(",");
-  Serial.print("1hour");
-  Serial.print(",");
-  Serial.println("3hour");
+  Wire.begin(D5, D6);
+  lightMeter.begin();
 
   for(int i=0; i<l_time; i++)  count[i] = 0;
   idx = 0;
   
-  pinMode(D3, INPUT);
-  attachInterrupt(D3, signal, FALLING);
+  pinMode(D7, INPUT);
+  attachInterrupt(D7, signal, FALLING);
 }
 
 void loop() {
@@ -99,13 +100,14 @@ void loop() {
 
 void Ini_HTTP_Response()
 {
+  double lux = 0.0;
   int l_cnt, m_cnt, s_cnt;
   int ini;
 
   client = server.available();//クライアント生成
   delay(1);
   String req;
-  char l_s[16], m_s[16], s_s[16];
+  char l_s[16], m_s[16], s_s[16], lx[16];
 
   while(client){
     if(client.available()){
@@ -124,15 +126,18 @@ void Ini_HTTP_Response()
         req = "";
         delay(10);//10ms待ってレスポンスをブラウザに送信
         
+        lux = lightMeter.readLightLevel();
+        dtostrf(lux,5,2,lx);
+
         s_cnt = count[idx];
         m_cnt = 0;
         for(int i =0; i < m_time; i++){m_cnt += count[(idx-i+l_time)%l_time];}
         l_cnt = 0;
         for(int i =0; i < l_time; i++){l_cnt += count[i];}
 
-        dtostrf(l_cnt,5,2,l_s);
-        dtostrf(m_cnt,5,2,m_s);
-        dtostrf(s_cnt,5,2,s_s);
+        dtostrf(l_cnt*0.2794,5,2,l_s);
+        dtostrf(m_cnt*0.2794,5,2,m_s);
+        dtostrf(s_cnt*0.2794,5,2,s_s);
 
         client.print(F("HTTP/1.1 200 OK\r\n"));
         client.print(F("Content-Type:application/json; charset=utf-8\r\n"));
@@ -150,8 +155,11 @@ void Ini_HTTP_Response()
 
         client.print(F("  \"5 min\": "));
         client.print(s_s);
-        client.print(F("\r\n"));
+        client.print(F(",\r\n"));
 
+        client.print(F("  \"light\": "));
+        client.print(lx);
+        client.print(F("\r\n"));
         client.print(F("}\r\n"));
 
         delay(1);//これが重要！これが無いと切断できないかもしれない。
@@ -160,14 +168,7 @@ void Ini_HTTP_Response()
         Serial.println("\nGET HTTP client stop--------------------");
         req = "";
         Ini_html_on = false;  //一回切りの接続にしたい場合、ここをtrueにする
-        
-        // for debug
-        Serial.print(s_cnt);
-        Serial.print(",");
-        Serial.print(m_cnt);
-        Serial.print(",");
-        Serial.println(l_cnt);
-      
+
         if(ini){
           idx++;
           if(idx == l_time){idx=0;}

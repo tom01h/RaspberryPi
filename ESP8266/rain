@@ -26,9 +26,9 @@ if [ "$1" = "config" ]; then
  echo 'fmin.draw LINE2'
  exit 0
 fi
-GETNUM=`/usr/local/bin/esp8266_rain.pl 0 11`
+GETNUM=`/usr/local/bin/esp8266_rain.pl 0 12`
 echo "thour.value $GETNUM";
-GETNUM=`/usr/local/bin/esp8266_rain.pl 1 11`
+GETNUM=`/usr/local/bin/esp8266_rain.pl 1 12`
 echo "ohour.value $GETNUM";
-GETNUM=`/usr/local/bin/esp8266_rain.pl 2 11`
+GETNUM=`/usr/local/bin/esp8266_rain.pl 2 12`
 echo "fmin.value $GETNUM";
